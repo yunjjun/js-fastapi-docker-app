@@ -10,9 +10,11 @@ pipeline {
 				checkout scm
 			}
 		}
-		stage("Build") {
+		stage("Building image") {
 			steps {
-				sh "docker build -t fastapi-docker ."
+				script {
+					dockerImage = docker.build fastapi-docker
+				}
 			}
 		}
 		stage("test") {
@@ -29,7 +31,7 @@ pipeline {
 		}
 		stage("deploy") {
 			steps {
-				sh "docker run -d --name fastapi-app -p 80:80 fastapi-docker:latest"
+				echo "deploying.."
 			}
 		}
 	}
