@@ -19,7 +19,7 @@ pipeline {
 		}
 		stage("Build") {
 			steps {
-				sh 'docker'
+				sh 'docker build -t fastapi-docker .'
 			}
 		}
 		stage("test") {
