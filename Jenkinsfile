@@ -1,5 +1,5 @@
 pipeline {
-	agent any
+	agent { docker { image 'python:3.9'}}
 	parameters {
 		choice(name: 'VERSION', choices: ['1.1.0','1.2.0','1.3.0'], description: '')
 		booleanParam(name: 'executeTests', defaultValue: true, description: '')
@@ -10,11 +10,9 @@ pipeline {
 				checkout scm
 			}
 		}
-		stage("Building image") {
+		stage("Build") {
 			steps {
-				script {
-					dockerImage = docker.build fastapi-docker
-				}
+				sh 'pip install -r /app/requirements.txt'
 			}
 		}
 		stage("test") {
