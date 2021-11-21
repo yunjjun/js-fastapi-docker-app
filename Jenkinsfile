@@ -50,6 +50,7 @@ pipeline {
 		stage("deploy") {
 			steps {
 				sh "docker-compose up -d"
+				sh "kubectl get all"
 			}
 		}
 	}
