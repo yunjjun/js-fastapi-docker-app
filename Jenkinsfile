@@ -19,7 +19,7 @@ pipeline {
 		}
 		stage("Build") {
 			steps {
-				sh 'docker build -t fastapi-docker .'
+				sh 'docker-compose build web'
 			}
 		}
 		stage("test") {
@@ -36,7 +36,7 @@ pipeline {
 		}
 		stage("deploy") {
 			steps {
-				sh "docker run -d --name fastapi-app -p 80:80 fastapi-docker:latest"
+				sh "docker-compose up -d"
 			}
 		}
 	}
