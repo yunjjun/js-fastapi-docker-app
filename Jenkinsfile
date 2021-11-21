@@ -41,9 +41,9 @@ pipeline {
 				usernameVariable: 'DOCKER_USER_ID', 
 				passwordVariable: 'DOCKER_USER_PASSWORD'
 				]]) {
-					sh "docker tag mlops_web:latest ${DOCKER_USER_ID}/fastapi-app:${BUILD_NUMBER}"
+					sh "docker tag mlops_web:latest ${DOCKER_USER_ID}/jenkins-app:${BUILD_NUMBER}"
 					sh "docker login -u ${DOCKER_USER_ID} -p ${DOCKER_USER_PASSWORD}"
-					sh "docker push ${DOCKER_USER_ID}/fastapi-app:${BUILD_NUMBER}"
+					sh "docker push ${DOCKER_USER_ID}/jenkins-app:${BUILD_NUMBER}"
 				}
 			}
 		}
