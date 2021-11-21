@@ -19,7 +19,12 @@ pipeline {
 		}
 		stage("Build") {
 			steps {
-				sh 'docker build -t fastapi-docker .'
+				sh '''
+				sudo /usr/sbin/groupadd -f docker
+				sudo /usr/sbin/usermod -aG docker `user`
+				sudo chown root:docker /var/run/docker.sock
+				docker build -t fastapi-docker .
+				'''
 			}
 		}
 		stage("test") {
