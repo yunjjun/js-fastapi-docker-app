@@ -34,6 +34,17 @@ pipeline {
 				}
 			}
 		}
+		stage("Tag and Push") {
+			steps {
+				withCredentials([
+					usernamePassword(credentials: 'docker-hub', usernameVariable: DOCKER_USER_ID, passwordVariable: DOCKER_USER_PASSWORD)
+				]) {
+					sh "docker tag fastapi-app:latest ${DOCKER_USER_ID}/fastapi-app:${BUILD_NUMBER}"
+					sh "docker login -u ${DOCKER_USER_ID} -p ${DOCKER_USER_PASSWORD}"
+					sh "docker push ${DOCKER_USER_ID}/fastapi-app:${BUILD_NUMBER}"
+				}
+			}
+		}
 		stage("deploy") {
 			steps {
 				sh "docker-compose up -d"
