@@ -50,7 +50,7 @@ pipeline {
 		stage("deploy") {
 			steps {
 				sh "docker-compose up -d"
-				sh "kubectl version"
+				sh "kubectl apply -f kubernetes/"
 			}
 		}
 	}
