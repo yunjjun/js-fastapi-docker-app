@@ -12,7 +12,7 @@ pipeline {
 		}
 		stage("Build") {
 			steps {
-				sh 'pip install -r /app/requirements.txt'
+				sh 'ls -al'
 			}
 		}
 		stage("test") {
