@@ -1,22 +1,20 @@
 pipeline {
-	agent any
+	agent {
+		dockerfile { filename 'Dockerfile' }
+	}
 	parameters {
 		choice(name: 'VERSION', choices: ['1.1.0','1.2.0','1.3.0'], description: '')
 		booleanParam(name: 'executeTests', defaultValue: true, description: '')
 	}
 	stages {
-		stage("init") {
+		stage("Checkout") {
 			steps {
-				script {
-					gv = load "script.groovy"
-				}
+				checkout scm
 			}
 		}
-		stage("build") {
+		stage("Build") {
 			steps {
-				script {
-					gv.buildApp()
-				}
+				sh "docker build -t fastapi-docker ."
 			}
 		}
 		stage("test") {
@@ -33,9 +31,7 @@ pipeline {
 		}
 		stage("deploy") {
 			steps {
-				script {
-					gv.deployApp()
-				}
+				sh "docker run -d --name fastapi-app -p 80:80 fastapi-docker:latest"
 			}
 		}
 	}
