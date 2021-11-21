@@ -36,7 +36,7 @@ pipeline {
 		}
 		stage("deploy") {
 			steps {
-				sh "docker run -d --name fastapi-app -p 80:80 fastapi-docker:${BUILD_NUMBER}"
+				sh "docker run -d --name fastapi-app -p 80:80 fastapi-docker:latest"
 			}
 		}
 	}
