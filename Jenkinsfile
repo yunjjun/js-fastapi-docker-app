@@ -19,9 +19,7 @@ pipeline {
 		}
 		stage("Build") {
 			steps {
-				sh '''
-				docker build -t fastapi-docker .
-				'''
+				sh 'docker build -t fastapi-docker .'
 			}
 		}
 		stage("test") {
@@ -38,7 +36,7 @@ pipeline {
 		}
 		stage("deploy") {
 			steps {
-				echo "deploying.."
+				sh "docker run -d --name fastapi-app -p 80:80 fastapi-docker:${BUILD_NUMBER}"
 			}
 		}
 	}
